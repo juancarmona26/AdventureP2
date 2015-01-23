@@ -12,5 +12,6 @@
     <string name="text_view_alley_where_to_go">You have ventured down a dark alley, where would you like to go next</string>
     <string name="button_go_left">Go Left</string>
     <string name="button_go_right">Go Right</string>
+    <string name="button_continue">Continue</string>
 
 </resources>
