@@ -10,5 +10,6 @@
     <string name="title_activity_room_acitvity">RoomAcitvity</string>
     <string name="text_view_alley_screen">This is the Alley Screen</string>
     <string name="text_view_alley_where_to_go">You have ventured down a dark alley, where would you like to go next</string>
+    <string name="button_go_left">Go Left</string>
 
 </resources>
