@@ -4,5 +4,6 @@
     <string name="app_name">ChooseYourOwnAdventure</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="text_view_welcom">Welcome to the start of your own adventure</string>
 
 </resources>
