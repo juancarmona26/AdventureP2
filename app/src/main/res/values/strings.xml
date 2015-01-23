@@ -6,5 +6,8 @@
     <string name="action_settings">Settings</string>
     <string name="text_view_welcom">Welcome to the start of your own adventure</string>
     <string name="button_start_traveling">Start Traveling!</string>
+    <string name="title_activity_alley">AlleyActivity</string>
+    <string name="title_activity_room_acitvity">RoomAcitvity</string>
+    <string name="text_view_alley_screen">This is the Alley Screen</string>
 
 </resources>
