@@ -8,8 +8,7 @@ import android.widget.Toast;
 
 import java.util.Random;
 
-
-public class ContainerActivity extends FragmentActivity implements AlleyFragment.OnClickAdventureButtons {
+public class ContainerActivity extends FragmentActivity implements AlleyFragment.OnClickAdventureButtons, RoomFragment.OnClickButtons {
 
     public static final String LOG_TAG = ContainerActivity.class.getName();
     private Random random = new Random();
@@ -65,7 +64,7 @@ public class ContainerActivity extends FragmentActivity implements AlleyFragment
         FragmentTransaction transaction;
         switch (randomNumber){
 
-            case 1: Toast.makeText(getApplicationContext(), "You has been returned here after you pressed that button", Toast.LENGTH_LONG).show();
+            case 1: Toast.makeText(getApplicationContext(), "That button brought you to here", Toast.LENGTH_LONG).show();
                     AlleyFragment alleyFragment = new AlleyFragment();
                     transaction = getFragmentManager().beginTransaction();
                     transaction.replace(R.id.layout_container, alleyFragment);
@@ -74,7 +73,8 @@ public class ContainerActivity extends FragmentActivity implements AlleyFragment
                     transaction.commit();
                 break;
 
-            case 2: RoomFragment roomFragment = new RoomFragment();
+            case 2: Toast.makeText(getApplicationContext(), "That button brought you to here", Toast.LENGTH_LONG).show();
+                    RoomFragment roomFragment = new RoomFragment();
                     transaction = getFragmentManager().beginTransaction();
                     transaction.replace(R.id.layout_container, roomFragment);
                     transaction.addToBackStack(null);
@@ -95,5 +95,32 @@ public class ContainerActivity extends FragmentActivity implements AlleyFragment
         transaction.addToBackStack(null);
 
         transaction.commit();
+    }
+
+    public void showResult(String resultToShow) {
+        ResultFragment newFragment = new ResultFragment();
+        Bundle args = new Bundle();
+        args.putString("resultToShow", resultToShow);
+        newFragment.setArguments(args);
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.replace(R.id.layout_container, newFragment);
+        transaction.addToBackStack(null);
+
+        transaction.commit();
+    }
+
+    @Override
+    public void onButtonRoomOneClicked(){
+        showResult("You've reached the gold!");
+    }
+
+    @Override
+    public void onButtonRoomTwoClicked() {
+        showResult("You've fallen in to the pit of despair");
+    }
+
+    @Override
+    public void onButtonRandomClicked() {
+        onClickButtonToRandomView();
     }
 }
