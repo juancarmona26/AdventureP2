@@ -29,7 +29,7 @@ public class AlleyFragment extends Fragment {
 
     public interface OnClickAdventureButtons {
         public void onClickButtonToWin();
-        public void onClickButtonToRoomView();
+        public void onClickButtonToRandomView();
         public void onClickButtonToLoose();
     }
 
@@ -70,7 +70,7 @@ public class AlleyFragment extends Fragment {
         mButtonToRoomView.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                mCallback.onClickButtonToRoomView();
+                mCallback.onClickButtonToRandomView();
             }
         });
     }
