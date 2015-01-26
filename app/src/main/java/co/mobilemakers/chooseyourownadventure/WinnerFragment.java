@@ -13,7 +13,6 @@ public class WinnerFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         view= inflater.inflate(R.layout.fragment_winner, container, false);
-
         return view;
     }
 }

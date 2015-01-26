@@ -17,5 +17,9 @@
     <string name="text_view_room">This is the Room View!!</string>
     <string name="text_view_you_lost">You Lost!</string>
     <string name="text_view_you_won">You Won!</string>
+    <string name="text_view_room_enter">You have entered a room wiht two doors</string>
+    <string name="text_view_door_1">Enter Door 1</string>
+    <string name="text_view_door_2">Enter Door 2</string>
+    <string name="text_view_room_random">Random</string>
 
 </resources>

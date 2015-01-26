@@ -36,7 +36,6 @@ public class AlleyFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-//         Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_alley, container, false);
 
         prepareAdventureButtonsEvent();
@@ -78,9 +77,6 @@ public class AlleyFragment extends Fragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-
-        // This makes sure that the container activity has implemented
-        // the callback interface. If not, it throws an exception.
         try {
             mCallback = (OnClickAdventureButtons) activity;
         } catch (ClassCastException e) {
