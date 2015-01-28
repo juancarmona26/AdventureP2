@@ -10,6 +10,7 @@ import java.util.Random;
 public class ContainerActivity extends FragmentActivity {
 
     public static final String LOG_TAG = ContainerActivity.class.getName();
+
     private Random random = new Random();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
