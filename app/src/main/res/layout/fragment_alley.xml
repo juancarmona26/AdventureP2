@@ -26,20 +26,23 @@
             android:layout_height="wrap_content"
             android:text="@string/button_go_left"
             android:id="@+id/button_go_left"
-            android:layout_gravity="center_vertical" />
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/button_continue"
-            android:id="@+id/button_continue" />
+            android:id="@+id/button_continue"
+            android:layout_weight="1" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/button_go_right"
             android:id="@+id/button_go_right"
-            android:layout_gravity="center_vertical" />
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1" />
     </LinearLayout>
 
 </LinearLayout>
