@@ -8,7 +8,9 @@ import android.widget.Toast;
 
 import java.util.Random;
 
-public class ContainerActivity extends FragmentActivity implements AlleyFragment.OnClickAdventureButtons, RoomFragment.OnClickButtons {
+public class ContainerActivity extends FragmentActivity implements  AlleyFragment.OnClickAdventureButtons,
+                                                                    RoomFragment.OnClickButtons,
+                                                                    MainFragment.InitialEvents{
 
     public static final String LOG_TAG = ContainerActivity.class.getName();
 
@@ -19,28 +21,38 @@ public class ContainerActivity extends FragmentActivity implements AlleyFragment
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_container);
+        showMainFragment();
+    }
 
-        chooseFragmentRandomly();
-
+    private void showMainFragment() {
+        MainFragment mainFragment  = new MainFragment();
+        getFragmentManager().beginTransaction().add(R.id.layout_container, mainFragment).commit();
     }
 
     private void chooseFragmentRandomly(){
         int randomNumber = randomNumberToShowView();
+        FragmentTransaction transaction;
         Log.d(LOG_TAG, "Random number = "+ randomNumber);
 
         switch (randomNumber){
 
             case 1:
                     AlleyFragment alleyFragment = new AlleyFragment();
-                    getFragmentManager().beginTransaction().add(R.id.layout_container, alleyFragment).commit();
+
+                    transaction = getFragmentManager().beginTransaction();
+                    transaction.replace(R.id.layout_container, alleyFragment);
+                    transaction.addToBackStack(null);
+                    transaction.commit();
             break;
 
             case 2: RoomFragment roomFragment = new RoomFragment();
-                    getFragmentManager().beginTransaction().add(R.id.layout_container, roomFragment).commit();
+                    transaction= getFragmentManager().beginTransaction();
+                    transaction.replace(R.id.layout_container, roomFragment);
+                    transaction.addToBackStack(null);
+                    transaction.commit();
             break;
 
             default:
-
         }
 
     }
@@ -123,5 +135,10 @@ public class ContainerActivity extends FragmentActivity implements AlleyFragment
     @Override
     public void onButtonRandomClicked() {
         onClickButtonToRandomView();
+    }
+
+    @Override
+    public void onButtonStartAdventureClicked() {
+        chooseFragmentRandomly();
     }
 }

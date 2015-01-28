@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/ChooseYourOwnAdventure.iml" filepath="$PROJECT_DIR$/ChooseYourOwnAdventure.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ChooseYourOwnAdventureP2.iml" filepath="$PROJECT_DIR$/ChooseYourOwnAdventureP2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ChooseYourOwnAdventurePart2.iml" filepath="$PROJECT_DIR$/ChooseYourOwnAdventurePart2.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
