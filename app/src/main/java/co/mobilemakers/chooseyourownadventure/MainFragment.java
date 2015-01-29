@@ -45,12 +45,10 @@ public class MainFragment extends Fragment {
     }
 
     private void setViewEvents(){
-        Log.d(LOG_TAG, "SetEvents");
         mButtonStartAdventure.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-               Log.d(LOG_TAG, "Evento");
                mCallBack.onButtonStartAdventureClicked();
             }
         });
@@ -60,7 +58,6 @@ public class MainFragment extends Fragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         try {
-            Log.d(LOG_TAG, "OnAttach");
             mCallBack = (InitialEvents) activity;
 
         } catch (ClassCastException e) {

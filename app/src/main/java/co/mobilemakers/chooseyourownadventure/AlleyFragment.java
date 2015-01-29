@@ -81,7 +81,7 @@ public class AlleyFragment extends Fragment {
             mCallback = (OnClickAdventureButtons) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
-                    + " must implement OnHeadlineSelectedListener");
+                    + " must implement OnClickAdventureButtons");
         }
     }
 }

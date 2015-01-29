@@ -1,20 +1,21 @@
 package co.mobilemakers.chooseyourownadventure;
 
+import android.app.Activity;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.widget.Toast;
 
 import java.util.Random;
 
-public class ContainerActivity extends FragmentActivity implements  AlleyFragment.OnClickAdventureButtons,
+public class ContainerActivity extends Activity implements  AlleyFragment.OnClickAdventureButtons,
                                                                     RoomFragment.OnClickButtons,
                                                                     MainFragment.InitialEvents{
 
     public static final String LOG_TAG = ContainerActivity.class.getName();
 
     private Random random = new Random();
+    MainFragment mainFragment;
 
 
     @Override
@@ -25,7 +26,7 @@ public class ContainerActivity extends FragmentActivity implements  AlleyFragmen
     }
 
     private void showMainFragment() {
-        MainFragment mainFragment  = new MainFragment();
+        mainFragment  = new MainFragment();
         getFragmentManager().beginTransaction().add(R.id.layout_container, mainFragment).commit();
     }
 
@@ -36,19 +37,23 @@ public class ContainerActivity extends FragmentActivity implements  AlleyFragmen
 
         switch (randomNumber){
 
-            case 1:
+            case 1: Log.d(LOG_TAG," Entra");
                     AlleyFragment alleyFragment = new AlleyFragment();
 
                     transaction = getFragmentManager().beginTransaction();
                     transaction.replace(R.id.layout_container, alleyFragment);
+                    transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
                     transaction.addToBackStack(null);
                     transaction.commit();
             break;
 
-            case 2: RoomFragment roomFragment = new RoomFragment();
-                    transaction= getFragmentManager().beginTransaction();
+            case 2: Log.d(LOG_TAG," Entra2");
+                    RoomFragment roomFragment = new RoomFragment();
+                    transaction = getFragmentManager().beginTransaction();
                     transaction.replace(R.id.layout_container, roomFragment);
+                    transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
                     transaction.addToBackStack(null);
+
                     transaction.commit();
             break;
 
@@ -67,6 +72,7 @@ public class ContainerActivity extends FragmentActivity implements  AlleyFragmen
 
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.replace(R.id.layout_container, winnerFragment);
+        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         transaction.addToBackStack(null);
         transaction.commit();
     }
@@ -81,21 +87,24 @@ public class ContainerActivity extends FragmentActivity implements  AlleyFragmen
                     AlleyFragment alleyFragment = new AlleyFragment();
                     transaction = getFragmentManager().beginTransaction();
                     transaction.replace(R.id.layout_container, alleyFragment);
+                    transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
                     transaction.addToBackStack(null);
-
                     transaction.commit();
+
                 break;
 
             case 2: Toast.makeText(getApplicationContext(), "That button brought you to here", Toast.LENGTH_LONG).show();
                     RoomFragment roomFragment = new RoomFragment();
                     transaction = getFragmentManager().beginTransaction();
                     transaction.replace(R.id.layout_container, roomFragment);
+                    transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
                     transaction.addToBackStack(null);
 
-                transaction.commit();
+                    transaction.commit();
+
                 break;
 
-            default:
+            default: Log.d(LOG_TAG," Default");
 
         }
     }
@@ -105,6 +114,7 @@ public class ContainerActivity extends FragmentActivity implements  AlleyFragmen
         LooserFragment newFragment = new LooserFragment();
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.replace(R.id.layout_container, newFragment);
+        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         transaction.addToBackStack(null);
 
         transaction.commit();
@@ -117,6 +127,7 @@ public class ContainerActivity extends FragmentActivity implements  AlleyFragmen
         newFragment.setArguments(args);
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.replace(R.id.layout_container, newFragment);
+        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         transaction.addToBackStack(null);
 
         transaction.commit();
@@ -141,4 +152,6 @@ public class ContainerActivity extends FragmentActivity implements  AlleyFragmen
     public void onButtonStartAdventureClicked() {
         chooseFragmentRandomly();
     }
+
+
 }
