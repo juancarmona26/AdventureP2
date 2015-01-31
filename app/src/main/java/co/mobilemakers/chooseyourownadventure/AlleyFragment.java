@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import java.util.ArrayList;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -28,7 +30,7 @@ public class AlleyFragment extends Fragment {
     }
 
     public interface OnClickAdventureButtons {
-        public void onClickButtonToWin();
+        public void onClickButtonToWin(int position);
         public void onClickButtonToRandomView();
         public void onClickButtonToLoose();
     }
@@ -40,6 +42,14 @@ public class AlleyFragment extends Fragment {
 
         prepareAdventureButtonsEvent();
         setAdventureButtonEvents();
+        ContainerActivity.randomNumbersProb = new ArrayList<>();
+        for(int i = 0; i < 3; i++) {
+            int randomNumber = ContainerActivity.randomNumberToShowView(100);
+            while(ContainerActivity.randomNumbersProb.contains(randomNumber)) {
+                randomNumber = ContainerActivity.randomNumberToShowView(100);
+            }
+            ContainerActivity.randomNumbersProb.add(randomNumber);
+        }
 
         return view;
     }
@@ -52,26 +62,60 @@ public class AlleyFragment extends Fragment {
 
     private void setAdventureButtonEvents(){
 
-        mButtonToWin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mCallback.onClickButtonToWin();
-            }
-        });
+        mButtonToWin.setOnClickListener(clickListener);
 
-        mButtonToLoose.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mCallback.onClickButtonToLoose();
-            }
-        });
+        mButtonToLoose.setOnClickListener(clickListener);
 
-        mButtonToRoomView.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                mCallback.onClickButtonToRandomView();
+        mButtonToRoomView.setOnClickListener(clickListener);
+    }
+
+    View.OnClickListener clickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            boolean firstValidation = false;
+            boolean secondValidation = false;
+
+
+            switch (v.getId()){
+                case R.id.button_go_right:
+                    firstValidation = validateValueInPosition(0, 1);
+                    secondValidation = validateValueInPosition(0, 2);
+
+                    selectWhereToGo(firstValidation, secondValidation);
+
+                    break;
+
+                case R.id.button_continue:
+                    firstValidation = validateValueInPosition(1, 0);
+                    secondValidation = validateValueInPosition(1, 2);
+
+                    selectWhereToGo(firstValidation, secondValidation);
+                break;
+
+                case R.id.button_go_left:
+                    firstValidation = validateValueInPosition(2, 0);
+                    secondValidation = validateValueInPosition(2, 1);
+
+                    selectWhereToGo(firstValidation, secondValidation);
+                break;
             }
-        });
+
+        }
+    };
+
+    private void selectWhereToGo(boolean firstValidation, boolean secondValidation) {
+        if(firstValidation && secondValidation){
+            mCallback.onClickButtonToWin(0);
+        } else if(!firstValidation && secondValidation || firstValidation && !secondValidation) {
+            mCallback.onClickButtonToWin(1);
+        } else mCallback.onClickButtonToWin(2);
+    }
+
+    private boolean validateValueInPosition(int currentPosition, int validationPosition ) {
+        if(ContainerActivity.randomNumbersProb.get(currentPosition) > ContainerActivity.randomNumbersProb.get(validationPosition)) {
+            return true;
+        }
+        return false;
     }
 
     @Override

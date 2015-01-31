@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
+import java.util.List;
 import java.util.Random;
 
 public class ContainerActivity extends Activity implements  AlleyFragment.OnClickAdventureButtons,
@@ -13,8 +14,9 @@ public class ContainerActivity extends Activity implements  AlleyFragment.OnClic
                                                                     MainFragment.InitialEvents{
 
     public static final String LOG_TAG = ContainerActivity.class.getName();
-
-    private Random random = new Random();
+    public static int randomNumbersProbability [] = {0,0,0};
+    public static List<Integer> randomNumbersProb = null;
+    private static Random random = new Random();
     MainFragment mainFragment;
 
 
@@ -31,7 +33,7 @@ public class ContainerActivity extends Activity implements  AlleyFragment.OnClic
     }
 
     private void chooseFragmentRandomly(){
-        int randomNumber = randomNumberToShowView();
+        int randomNumber = randomNumberToShowView(2);
         FragmentTransaction transaction;
         Log.d(LOG_TAG, "Random number = "+ randomNumber);
 
@@ -62,15 +64,43 @@ public class ContainerActivity extends Activity implements  AlleyFragment.OnClic
 
     }
 
-    private int randomNumberToShowView () {
-        return random.nextInt(2) + 1;
+    public static int randomNumberToShowView (int numberToGenerateRandom) {
+        return random.nextInt(numberToGenerateRandom) + 1;
     }
 
     @Override
-    public void onClickButtonToWin() {
-        WinnerFragment winnerFragment = new WinnerFragment();
+    public void onClickButtonToWin(int probabilityGoTo) {
+        switch (probabilityGoTo){
 
-        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+            case 0:
+                winnerScreen();
+            break;
+
+                case 1:
+                    showResult("You've reached the gold!");
+                break;
+
+                case 2:
+                    looserScreen();
+                break;
+            }
+    }
+
+    private void looserScreen() {
+        FragmentTransaction transaction;
+        LooserFragment newFragment = new LooserFragment();
+        transaction = getFragmentManager().beginTransaction();
+        transaction.replace(R.id.layout_container, newFragment);
+        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+        transaction.addToBackStack(null);
+
+        transaction.commit();
+    }
+
+    private void winnerScreen() {
+        FragmentTransaction transaction;WinnerFragment winnerFragment = new WinnerFragment();
+
+        transaction = getFragmentManager().beginTransaction();
         transaction.replace(R.id.layout_container, winnerFragment);
         transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         transaction.addToBackStack(null);
@@ -79,7 +109,9 @@ public class ContainerActivity extends Activity implements  AlleyFragment.OnClic
 
     @Override
     public void onClickButtonToRandomView() {
-        int randomNumber = randomNumberToShowView();
+
+
+        int randomNumber = randomNumberToShowView(2);
         FragmentTransaction transaction;
         switch (randomNumber){
 
