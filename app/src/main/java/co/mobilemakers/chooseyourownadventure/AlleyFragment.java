@@ -30,9 +30,7 @@ public class AlleyFragment extends Fragment {
     }
 
     public interface OnClickAdventureButtons {
-        public void onClickButtonToWin(int position);
-        public void onClickButtonToRandomView();
-        public void onClickButtonToLoose();
+        public void onClickButtons(int position);
     }
 
     @Override
@@ -42,16 +40,20 @@ public class AlleyFragment extends Fragment {
 
         prepareAdventureButtonsEvent();
         setAdventureButtonEvents();
-        ContainerActivity.randomNumbersProb = new ArrayList<>();
-        for(int i = 0; i < 3; i++) {
-            int randomNumber = ContainerActivity.randomNumberToShowView(100);
-            while(ContainerActivity.randomNumbersProb.contains(randomNumber)) {
-                randomNumber = ContainerActivity.randomNumberToShowView(100);
-            }
-            ContainerActivity.randomNumbersProb.add(randomNumber);
-        }
+        ContainerActivity.randomAlleyStates = new ArrayList<>();
+        setDifferentRandomNumbers();
 
         return view;
+    }
+
+    private void setDifferentRandomNumbers() {
+        for(int i = 0; i < 3; i++) {
+            int randomNumber = ContainerActivity.randomNumberToShowView(100);
+            while(ContainerActivity.randomAlleyStates.contains(randomNumber) && i != 0) {
+                randomNumber = ContainerActivity.randomNumberToShowView(100);
+            }
+            ContainerActivity.randomAlleyStates.add(randomNumber);
+        }
     }
 
     private void prepareAdventureButtonsEvent() {
@@ -72,9 +74,8 @@ public class AlleyFragment extends Fragment {
     View.OnClickListener clickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            boolean firstValidation = false;
-            boolean secondValidation = false;
-
+            boolean firstValidation;
+            boolean secondValidation;
 
             switch (v.getId()){
                 case R.id.button_go_right:
@@ -105,17 +106,14 @@ public class AlleyFragment extends Fragment {
 
     private void selectWhereToGo(boolean firstValidation, boolean secondValidation) {
         if(firstValidation && secondValidation){
-            mCallback.onClickButtonToWin(0);
-        } else if(!firstValidation && secondValidation || firstValidation && !secondValidation) {
-            mCallback.onClickButtonToWin(1);
-        } else mCallback.onClickButtonToWin(2);
+            mCallback.onClickButtons(0);
+        } else if((!firstValidation && secondValidation) || (firstValidation && !secondValidation)) {
+            mCallback.onClickButtons(1);
+        } else mCallback.onClickButtons(2);
     }
 
     private boolean validateValueInPosition(int currentPosition, int validationPosition ) {
-        if(ContainerActivity.randomNumbersProb.get(currentPosition) > ContainerActivity.randomNumbersProb.get(validationPosition)) {
-            return true;
-        }
-        return false;
+        return ContainerActivity.randomAlleyStates.get(currentPosition) > ContainerActivity.randomAlleyStates.get(validationPosition);
     }
 
     @Override

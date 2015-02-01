@@ -14,11 +14,10 @@ public class ContainerActivity extends Activity implements  AlleyFragment.OnClic
                                                                     MainFragment.InitialEvents{
 
     public static final String LOG_TAG = ContainerActivity.class.getName();
-    public static int randomNumbersProbability [] = {0,0,0};
-    public static List<Integer> randomNumbersProb = null;
+    public static List<Integer> randomAlleyStates = null;
+    public static List<Integer> randomRoomStates = null;
     private static Random random = new Random();
     MainFragment mainFragment;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,9 +38,8 @@ public class ContainerActivity extends Activity implements  AlleyFragment.OnClic
 
         switch (randomNumber){
 
-            case 1: Log.d(LOG_TAG," Entra");
+            case 1: Toast.makeText(getApplicationContext(), "That button brought you to Alley", Toast.LENGTH_LONG).show();
                     AlleyFragment alleyFragment = new AlleyFragment();
-
                     transaction = getFragmentManager().beginTransaction();
                     transaction.replace(R.id.layout_container, alleyFragment);
                     transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
@@ -49,7 +47,7 @@ public class ContainerActivity extends Activity implements  AlleyFragment.OnClic
                     transaction.commit();
             break;
 
-            case 2: Log.d(LOG_TAG," Entra2");
+            case 2: Toast.makeText(getApplicationContext(), "That button brought you to Room", Toast.LENGTH_LONG).show();
                     RoomFragment roomFragment = new RoomFragment();
                     transaction = getFragmentManager().beginTransaction();
                     transaction.replace(R.id.layout_container, roomFragment);
@@ -69,20 +67,20 @@ public class ContainerActivity extends Activity implements  AlleyFragment.OnClic
     }
 
     @Override
-    public void onClickButtonToWin(int probabilityGoTo) {
+    public void onClickButtons(int probabilityGoTo) {
         switch (probabilityGoTo){
 
             case 0:
                 winnerScreen();
             break;
 
-                case 1:
-                    showResult("You've reached the gold!");
-                break;
+            case 1:
+                chooseFragmentRandomly();
+            break;
 
-                case 2:
-                    looserScreen();
-                break;
+            case 2:
+                looserScreen();
+             break;
             }
     }
 
@@ -98,7 +96,8 @@ public class ContainerActivity extends Activity implements  AlleyFragment.OnClic
     }
 
     private void winnerScreen() {
-        FragmentTransaction transaction;WinnerFragment winnerFragment = new WinnerFragment();
+        FragmentTransaction transaction;
+        WinnerFragment winnerFragment = new WinnerFragment();
 
         transaction = getFragmentManager().beginTransaction();
         transaction.replace(R.id.layout_container, winnerFragment);
@@ -107,52 +106,9 @@ public class ContainerActivity extends Activity implements  AlleyFragment.OnClic
         transaction.commit();
     }
 
-    @Override
-    public void onClickButtonToRandomView() {
 
 
-        int randomNumber = randomNumberToShowView(2);
-        FragmentTransaction transaction;
-        switch (randomNumber){
-
-            case 1: Toast.makeText(getApplicationContext(), "That button brought you to here", Toast.LENGTH_LONG).show();
-                    AlleyFragment alleyFragment = new AlleyFragment();
-                    transaction = getFragmentManager().beginTransaction();
-                    transaction.replace(R.id.layout_container, alleyFragment);
-                    transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-                    transaction.addToBackStack(null);
-                    transaction.commit();
-
-                break;
-
-            case 2: Toast.makeText(getApplicationContext(), "That button brought you to here", Toast.LENGTH_LONG).show();
-                    RoomFragment roomFragment = new RoomFragment();
-                    transaction = getFragmentManager().beginTransaction();
-                    transaction.replace(R.id.layout_container, roomFragment);
-                    transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-                    transaction.addToBackStack(null);
-
-                    transaction.commit();
-
-                break;
-
-            default: Log.d(LOG_TAG," Default");
-
-        }
-    }
-
-    @Override
-    public void onClickButtonToLoose() {
-        LooserFragment newFragment = new LooserFragment();
-        FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        transaction.replace(R.id.layout_container, newFragment);
-        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-        transaction.addToBackStack(null);
-
-        transaction.commit();
-    }
-
-    public void showResult(String resultToShow) {
+     public void showResult(String resultToShow) {
         ResultFragment newFragment = new ResultFragment();
         Bundle args = new Bundle();
         args.putString("resultToShow", resultToShow);
@@ -166,18 +122,22 @@ public class ContainerActivity extends Activity implements  AlleyFragment.OnClic
     }
 
     @Override
-    public void onButtonRoomOneClicked(){
-        showResult("You've reached the gold!");
-    }
+    public void onButtonClicked(int whereToFall) {
+        switch (whereToFall) {
 
-    @Override
-    public void onButtonRoomTwoClicked() {
-        showResult("You've fallen in to the pit of despair");
+            case 0:
+                showResult("You've reached the gold!");
+                break;
+
+            case 1:
+                showResult("You've fallen in to the pit of despair");
+                break;
+        }
     }
 
     @Override
     public void onButtonRandomClicked() {
-        onClickButtonToRandomView();
+        chooseFragmentRandomly();
     }
 
     @Override
